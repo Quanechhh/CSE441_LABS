@@ -5,32 +5,30 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:ignore="ExtraText"><![CDATA[
+    tools:context=".MainActivity">
 
-
-    ]]><EditText
+    <EditText
         android:id="@+id/edtA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="63dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="Enter A"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edtB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="141dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="170dp"
         android:ems="10"
         android:hint="Enter B"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,11 +37,11 @@
         android:id="@+id/edtRS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="225dp"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="255dp"
         android:ems="10"
-        android:hint="Result"
-        android:inputType="textPersonName"
+        android:hint="Enter C"
+        android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,8 +50,8 @@
         android:id="@+id/btnSum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="327dp"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="366dp"
         android:text="Sum"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
