@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:stretchColumns="1"
+    android:orientation="vertical">
+
+    <!-- Row 1: Tiêu đề -->
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_span="2"
+            android:layout_gravity="center"
+            android:text="Chuyển đổi năm dương lịch"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+    </TableRow>
+
+    <!-- Row 2: Nhập năm dương lịch -->
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView1"
+            android:text="Năm dương lịch:" />
+
+        <EditText
+            android:id="@+id/editnamduonglich"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="2013"
+            tools:ignore="TouchTargetSizeCheck" />
+    </TableRow>
+
+    <!-- Row 3: Nút chuyển đổi -->
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnChuyen"
+            android:layout_span="2"
+            android:layout_gravity="center"
+            android:text="Chuyển đổi" />
+    </TableRow>
+
+    <!-- Row 4: Kết quả năm âm lịch -->
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView2"
+            android:text="Năm âm lịch:" />
+        <TextView
+            android:id="@+id/textView5"
+            android:text="Quý tỵ"
+            android:textStyle="italic" />
+    </TableRow>
+
+    <!-- Row 5: Dòng trống (tùy chọn) -->
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+</TableLayout>
