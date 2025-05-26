@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Tiêu đề chính -->
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00796B"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Thông tin cá nhân"
+            android:textColor="#FFEB3B"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Họ tên và CMND -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:stretchColumns="1">
+
+            <TableRow>
+
+                <TextView android:text="Họ tên:" />
+
+                <EditText
+                    android:id="@+id/editHoten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập họ tên"
+                    android:text="Doan Ai Nuong"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView android:text="CMND:" />
+
+                <EditText
+                    android:id="@+id/editCMND"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập CMND"
+                    android:inputType="number"
+                    android:text="250592829"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </TableRow>
+        </TableLayout>
+
+        <!-- Bằng cấp -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#2196F3"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Bằng cấp"
+            android:textColor="#FFEB3B"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radtc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trung cấp" />
+
+            <RadioButton
+                android:id="@+id/radcd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cao đẳng" />
+
+            <RadioButton
+                android:id="@+id/raddh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Đại học" />
+        </RadioGroup>
+
+        <!-- Sở thích -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#2196F3"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Sở thích"
+            android:textColor="#FFEB3B"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chkdocbao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Đọc báo" />
+
+            <CheckBox
+                android:id="@+id/chkdocsach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đọc sách" />
+
+            <CheckBox
+                android:id="@+id/chkdoccoding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Đọc coding" />
+        </LinearLayout>
+
+        <!-- Thông tin bổ sung -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#2196F3"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Thông tin bổ sung"
+            android:textColor="#FFEB3B"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+        <EditText
+            android:id="@+id/editBosung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:text="Senior Programmer10Senior saler" />
+
+        <!-- Nút gửi -->
+        <Button
+            android:id="@+id/btnGuiTT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:background="#DDD"
+            android:text="Gửi thông tin"
+            tools:ignore="TextContrastCheck" />
+    </LinearLayout>
+</ScrollView>

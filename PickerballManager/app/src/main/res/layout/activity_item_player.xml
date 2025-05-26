@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Tên hội viên" />
+
+    <TextView
+        android:id="@+id/txtCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mã hội viên" />
+
+    <TextView
+        android:id="@+id/txtBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ngày sinh" />
+
+    <TextView
+        android:id="@+id/txtHometown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quê quán" />
+
+    <TextView
+        android:id="@+id/txtResidence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nơi ở" />
+
+    <TextView
+        android:id="@+id/txtRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xếp hạng đơn / đôi" />
+
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Ảnh đại diện" />
+
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sửa" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xóa" />
+</LinearLayout>
