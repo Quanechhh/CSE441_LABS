@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:gravity="center_vertical"
+    android:background="?android:attr/selectableItemBackground"> <TextView
+    android:id="@+id/txtmaso"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="52300"
+    android:textSize="16sp"
+    android:textStyle="bold"
+    android:textColor="#3F51B5"
+    android:layout_marginEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/txtTieuDe"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Em là ai Tôi là ai"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <ImageButton
+        android:id="@+id/btnLike"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/heart_outline" android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:padding="8dp"
+        android:contentDescription="Like button" />
+
+</LinearLayout>
