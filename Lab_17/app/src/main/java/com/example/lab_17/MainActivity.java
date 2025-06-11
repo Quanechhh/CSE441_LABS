@@ -11,113 +11,102 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Hằng số cho việc quản lý database
-    private static final String DB_PATH_SUFFIX = "/databases/";
-    private static final String DATABASE_NAME = "qlsach.db"; // Tên file database của bạn
+    // Đường dẫn đến thư mục chứa database trong ứng dụng
+    String DB_PATH_SUFFIX = "/databases/";
+    SQLiteDatabase database = null;
+    // Tên của file database trong thư mục assets
+    String DATABASE_NAME = "sach.db";
 
-    private SQLiteDatabase database = null;
-    private ListView lv;
-    private ArrayList<String> mylist;
-    private ArrayAdapter<String> myadapter;
+    // Khai báo ListView và Adapter
+    ListView lv;
+    ArrayList<String> mylist;
+    ArrayAdapter<String> myadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // Đặt layout cho Activity
+        setContentView(R.layout.activity_main);
 
-        // Gọi phương thức để copy database từ assets sang hệ thống nếu cần
+        // Gọi hàm Copy CSDL từ assets vào thư mục Databases
         processCopy();
 
-        // Mở database
-        // MODE_PRIVATE đảm bảo chỉ ứng dụng này có thể truy cập
+        // Mở CSDL đã có
         database = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
 
-        lv = findViewById(R.id.lv); // Ánh xạ ListView từ layout
-        mylist = new ArrayList<>(); // Khởi tạo ArrayList để lưu dữ liệu
-        myadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mylist); // Tạo ArrayAdapter
-        lv.setAdapter(myadapter); // Gán adapter cho ListView
+        // Tạo ListView
+        lv = findViewById(R.id.lv);
+        mylist = new ArrayList<>();
+        myadapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1, mylist);
+        lv.setAdapter(myadapter);
 
-        // Truy vấn dữ liệu từ bảng tbsach và hiển thị lên ListView
-        // Đảm bảo tên bảng và tên cột trùng khớp với database của bạn
-        Cursor c = database.rawQuery("SELECT * FROM tbsach", null);
-        c.moveToFirst(); // Di chuyển con trỏ đến hàng đầu tiên
-        while (!c.isAfterLast()) { // Lặp qua tất cả các hàng
-            // Lấy dữ liệu từ các cột và định dạng thành chuỗi để hiển thị
-            String maSach = c.getString(c.getColumnIndexOrThrow("MaSach"));
-            String tenSach = c.getString(c.getColumnIndexOrThrow("TenSach"));
-            int soTrang = c.getInt(c.getColumnIndexOrThrow("SoTrang"));
-            double gia = c.getDouble(c.getColumnIndexOrThrow("Gia")); // Sử dụng getDouble cho kiểu REAL
-
-            String data = maSach + " - " + tenSach + " - " + soTrang + " trang - " + gia + " VNĐ";
-            mylist.add(data); // Thêm chuỗi dữ liệu vào ArrayList
-            c.moveToNext(); // Di chuyển con trỏ đến hàng tiếp theo
+        // Truy vấn CSDL và cập nhật hiển thị lên ListView
+        Cursor c = database.query("tbsach", null, null, null, null, null, null);
+        c.moveToFirst();
+        String data = "";
+        while (!c.isAfterLast()) {
+            // Lấy dữ liệu từ cột 0 và cột 1 (ví dụ)
+            data = c.getString(0) + " - " + c.getString(1);
+            mylist.add(data);
+            c.moveToNext();
         }
-        c.close(); // Đóng Cursor
-        database.close(); // Đóng kết nối database sau khi hoàn thành
-        myadapter.notifyDataSetChanged(); // Cập nhật ListView để hiển thị dữ liệu mới
+        c.close();
+        myadapter.notifyDataSetChanged();
     }
 
+    // Phương thức kiểm tra và sao chép database
     private void processCopy() {
-        // Lấy đường dẫn tới file database trên thiết bị
+        // Kiểm tra xem file database đã tồn tại trong thư mục ứng dụng chưa
         File dbFile = getDatabasePath(DATABASE_NAME);
-        // Kiểm tra xem database đã tồn tại trong thư mục dữ liệu của ứng dụng chưa
         if (!dbFile.exists()) {
             try {
-                CopyDatabaseFromAsset(); // Nếu chưa, thực hiện copy
+                // Nếu chưa tồn tại, thực hiện sao chép
+                CopyDatabaseFromAsset();
                 Toast.makeText(this, "Copying success from Assets folder", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
-                // Xử lý lỗi nếu việc copy thất bại
+                // Xử lý lỗi nếu có
                 Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
             }
         }
     }
 
+    // Phương thức lấy đường dẫn đầy đủ đến database trong ứng dụng
     private String getDatabasePath() {
-        // Trả về đường dẫn đầy đủ tới file database trên thiết bị
         return getApplicationInfo().dataDir + DB_PATH_SUFFIX + DATABASE_NAME;
     }
 
+    // Phương thức sao chép database từ thư mục assets vào ứng dụng
     public void CopyDatabaseFromAsset() throws IOException {
-        InputStream myInput = null;
-        OutputStream myOutput = null;
-        try {
-            // Mở file database cục bộ từ thư mục assets làm luồng đầu vào
-            myInput = getAssets().open(DATABASE_NAME);
+        InputStream myInput = getAssets().open(DATABASE_NAME);
+        // Đường dẫn đến thư mục sẽ lưu trữ database trong ứng dụng
+        String outFile = getDatabasePath();
 
-            // Đường dẫn đến file database rỗng vừa tạo trên thiết bị
-            String outFile = getDatabasePath();
-
-            // Nếu đường dẫn chưa tồn tại, tạo nó trước
-            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
-            if (!f.exists()) {
-                f.mkdir(); // Tạo thư mục
-            }
-
-            // Mở file database rỗng làm luồng đầu ra
-            myOutput = new FileOutputStream(outFile);
-
-            // Truyền byte từ luồng đầu vào sang luồng đầu ra
-            byte[] buffer = new byte[1024]; // Sử dụng bộ đệm để tăng hiệu suất
-            int length;
-            while ((length = myInput.read(buffer)) > 0) {
-                myOutput.write(buffer, 0, length);
-            }
-            myOutput.flush(); // Đảm bảo tất cả dữ liệu được ghi
-        } finally {
-            // Đóng các luồng để giải phóng tài nguyên
-            if (myOutput != null) {
-                myOutput.close();
-            }
-            if (myInput != null) {
-                myInput.close();
-            }
+        // Tạo thư mục nếu nó chưa tồn tại
+        File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+        if (!f.exists()) {
+            f.mkdir();
         }
+
+        // Mở file output rỗng để ghi dữ liệu
+        OutputStream myOutput = new FileOutputStream(outFile);
+
+        // Truyền bytes từ input sang output
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = myInput.read(buffer)) > 0) {
+            myOutput.write(buffer, 0, length);
+        }
+
+        // Đóng các luồng
+        myOutput.flush();
+        myOutput.close();
+        myInput.close();
     }
 }
