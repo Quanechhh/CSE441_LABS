@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="?android:attr/selectableItemBackground"> <ImageView
+    android:id="@+id/imgView"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:scaleType="centerCrop"
+    android:layout_marginEnd="8dp"
+    android:layout_gravity="center_vertical"
+    android:src="@drawable/ic_launcher_background" /> <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tiêu đề bài báo rất dài và có thể chiếm nhiều dòng"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:paddingBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/txtInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đây là phần tóm tắt nội dung của bài báo, có thể rất dài và cần được giới hạn số dòng để tránh tràn màn hình."
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:maxLines="3"
+        android:ellipsize="end"/>
+
+</LinearLayout>
+
+</LinearLayout>
