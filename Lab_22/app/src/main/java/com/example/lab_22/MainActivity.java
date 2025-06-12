@@ -1,116 +1,94 @@
 package com.example.lab_22;
 
-import android.os.AsyncTask; //
-import android.os.Bundle; //
-import android.util.Log; //
-import android.view.View; //
-import android.widget.ArrayAdapter; //
-import android.widget.Button; //
-import android.widget.ListView; //
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity; //
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.xmlpull.v1.XmlPullParser; //
-import org.xmlpull.v1.XmlPullParserFactory; //
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.IOException; //
-import java.io.StringReader; //
-import java.util.ArrayList; //
+import java.io.InputStream;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity { //
-    Button btnparse; //
-    ListView lv1; //
-    ArrayAdapter<String> myadapter; //
-    ArrayList<String> mylist; //
-    String URL = "https://api.androidhive.info/pizza/?format=xml"; //
+public class MainActivity extends AppCompatActivity {
 
-    @Override //
-    protected void onCreate(Bundle savedInstanceState) { //
-        super.onCreate(savedInstanceState); //
-        setContentView(R.layout.activity_main); //
+    Button btnparse;
+    ListView lv1;
+    ArrayList<String> mylist;
+    ArrayAdapter<String> myadapter;
 
-        btnparse = findViewById(R.id.btnparse); //
-        lv1 = findViewById(R.id.lv1); //
-        mylist = new ArrayList<>(); //
-        myadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mylist); //
-        lv1.setAdapter(myadapter); //
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        btnparse.setOnClickListener(new View.OnClickListener() { //
-            @Override //
-            public void onClick(View v) { //
-                LoadExampleTask task = new LoadExampleTask(); //
-                task.execute(); //
+        btnparse = findViewById(R.id.btnparse);
+        lv1 = findViewById(R.id.lv1);
+        mylist = new ArrayList<>();
+        myadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mylist);
+        lv1.setAdapter(myadapter);
+
+        btnparse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new LoadExampleTask().execute();
             }
         });
     }
 
-    // Lớp LoadExampleTask extends AsyncTask
-    class LoadExampleTask extends AsyncTask<Void, Void, ArrayList<String>> { //
+    class LoadExampleTask extends AsyncTask<Void, Void, ArrayList<String>> {
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            ArrayList<String> list = new ArrayList<>();
+            try {
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser parser = factory.newPullParser();
 
-        @Override //
-        protected void onPreExecute() { //
-            super.onPreExecute(); //
-            myadapter.clear(); // Xóa dữ liệu cũ trước khi parse mới
-        }
+                // Đọc từ file nội bộ pizza.xml trong res/raw
+                InputStream is = getResources().openRawResource(R.raw.pizza);
+                parser.setInput(is, null);
 
-        @Override //
-        protected ArrayList<String> doInBackground(Void... voids) { //
-            ArrayList<String> list = new ArrayList<>(); //
-            XMLParser myparser = new XMLParser(); //
-            String xml = myparser.getXmlFromUrl(URL); //
-            Log.d("XML_DATA", xml); // Log dữ liệu XML nhận được để kiểm tra
+                int eventType = parser.getEventType();
+                String id = "", name = "", data = "";
 
-            try { //
-                XmlPullParserFactory fc = XmlPullParserFactory.newInstance(); //
-                XmlPullParser parser = fc.newPullParser(); //
-                parser.setInput(new StringReader(xml)); //
-                int eventType = parser.getEventType(); //
-                String nodeName; //
-                String dataShow = ""; // Khởi tạo để tránh lỗi null
-
-                while (eventType != XmlPullParser.END_DOCUMENT) { //
-                    switch (eventType) { //
-                        case XmlPullParser.START_DOCUMENT: //
-                            break; //
-                        case XmlPullParser.START_TAG: //
-                            nodeName = parser.getName(); //
-                            if (nodeName.equals("id")) { //
-                                parser.next(); // Di chuyển đến nội dung của thẻ
-                                dataShow += parser.getText() + "-"; //
-                            } else if (nodeName.equals("name")) { //
-                                parser.next(); //
-                                dataShow += parser.getText(); //
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    switch (eventType) {
+                        case XmlPullParser.START_TAG:
+                            if (parser.getName().equals("id")) {
+                                id = parser.nextText();
+                            } else if (parser.getName().equals("name")) {
+                                name = parser.nextText();
                             }
-                            break; //
-                        case XmlPullParser.END_TAG: //
-                            nodeName = parser.getName(); //
-                            if (nodeName.equals("item")) { //
-                                list.add(dataShow); //
-                                dataShow = ""; // Reset sau khi thêm vào list
+                            break;
+
+                        case XmlPullParser.END_TAG:
+                            if (parser.getName().equals("item")) {
+                                data = id + ". " + name;
+                                list.add(data);
+                                id = "";
+                                name = "";
                             }
-                            break; //
+                            break;
                     }
-                    eventType = parser.next(); //
+                    eventType = parser.next();
                 }
-            } catch (Exception e) { // Sử dụng Exception chung để bắt cả XmlPullParserException và IOException
-                e.printStackTrace(); //
-                Log.e("XML_PARSE_ERROR", "Error parsing XML", e);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            return list; //
+
+            return list;
         }
 
-        @Override //
-        protected void onPostExecute(ArrayList<String> result) { //
-            super.onPostExecute(result); //
-            myadapter.clear(); // Xóa dữ liệu cũ một lần nữa (đảm bảo không trùng lặp nếu onPreExecute không chạy kịp)
-            myadapter.addAll(result); // Thêm tất cả kết quả vào adapter
-            myadapter.notifyDataSetChanged(); // Cập nhật ListView
-        }
-
-        @Override //
-        protected void onProgressUpdate(Void... values) { //
-            super.onProgressUpdate(values); //
-            // Không sử dụng trong bài này vì không có cập nhật tiến độ liên tục
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            super.onPostExecute(result);
+            myadapter.clear();
+            myadapter.addAll(result);
         }
     }
 }

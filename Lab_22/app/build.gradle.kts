@@ -3,6 +3,8 @@ plugins {
 }
 
 android {
+    useLibrary("org.apache.http.legacy")
+
     namespace = "com.example.lab_22"
     compileSdk = 35
 

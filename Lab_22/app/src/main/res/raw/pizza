@@ -1,0 +1,14 @@
+<menu>
+    <item>
+        <id>1</id>
+        <name>Margherita</name>
+    </item>
+    <item>
+        <id>2</id>
+        <name>Pepperoni</name>
+    </item>
+    <item>
+        <id>3</id>
+        <name>Hawaiian</name>
+    </item>
+</menu>
